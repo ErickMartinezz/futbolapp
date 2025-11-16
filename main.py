@@ -65,14 +65,12 @@ if usar_manual:
         imagen_redimensionada = cv2.resize(imagen_rgb, (nuevo_ancho, nuevo_alto))
 
         try:
-            imagen_pil = Image.fromarray(imagen_redimensionada.astype("uint8"))
+            imagen_pil = Image.fromarray(imagen_redimensionada.astype("uint8")).convert("RGBA")
         except Exception as e:
             st.error(f"Error al convertir imagen a PIL: {e}")
             imagen_pil = None
 
         if imagen_pil:
-            st.image(imagen_pil, caption="Vista previa de imagen PIL", width=800)
-
             canvas_result = st_canvas(
                 fill_color="rgba(255, 0, 0, 0.3)",
                 stroke_width=5,
@@ -112,3 +110,4 @@ if st.button("Detectar líneas del campo"):
     with st.spinner("Procesando líneas con OpenCV..."):
         imagen_lineas = detectar_lineas_campo(ruta)
         st.image(imagen_lineas, caption="Líneas detectadas", channels="BGR", width=800)
+
