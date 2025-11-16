@@ -112,4 +112,3 @@ if st.button("Detectar líneas del campo"):
     with st.spinner("Procesando líneas con OpenCV..."):
         imagen_lineas = detectar_lineas_campo(ruta)
         st.image(imagen_lineas, caption="Líneas detectadas", channels="BGR", width=800)
-
