@@ -55,7 +55,7 @@ if usar_manual:
 
     imagen_cv = cv2.imread(ruta)
     if imagen_cv is None:
-        st.error("No se pudo cargar la imagen.")
+        st.error("⚠️ No se pudo cargar la imagen. Verificá que el archivo exista y sea válido.")
     else:
         imagen_rgb = cv2.cvtColor(imagen_cv, cv2.COLOR_BGR2RGB)
 
@@ -67,10 +67,12 @@ if usar_manual:
         try:
             imagen_pil = Image.fromarray(imagen_redimensionada.astype("uint8"))
         except Exception as e:
-            st.error(f"No se pudo convertir la imagen a formato PIL: {e}")
+            st.error(f"Error al convertir imagen a PIL: {e}")
             imagen_pil = None
 
         if imagen_pil:
+            st.image(imagen_pil, caption="Vista previa de imagen PIL", width=800)
+
             canvas_result = st_canvas(
                 fill_color="rgba(255, 0, 0, 0.3)",
                 stroke_width=5,
@@ -110,3 +112,4 @@ if st.button("Detectar líneas del campo"):
     with st.spinner("Procesando líneas con OpenCV..."):
         imagen_lineas = detectar_lineas_campo(ruta)
         st.image(imagen_lineas, caption="Líneas detectadas", channels="BGR", width=800)
+
